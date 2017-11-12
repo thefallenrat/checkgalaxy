@@ -1,0 +1,5 @@
+#!/bin/bash
+
+galaxylist=$(for p in `pacman -Slq galaxy galaxy-testing | grep -v "\-openrc" | sort -u | sed 's/^virtualbox*//' | sed 's/^bbswitch*//'`; do expac -S "%n %v" "galaxy-testing/$p" "galaxy/$p" ; done | awk '!x[$1]++')
+communitylist=$(for p in `pacman -Slq galaxy galaxy-testing | grep -v "\-openrc" | sed 's/\-lts//' | sed 's/\-ck//' | sed 's/^bbswitch*//' | sort -u`; do expac -S "%n %v" "community-testing/$p" "community/$p" ; done | awk '!x[$1]++')
+meld <(echo "$galaxylist") <(echo "$communitylist")
